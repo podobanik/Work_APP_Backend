@@ -1,3 +1,3 @@
-login = "sa"
-password = "Rjrjiybr@2000"
-name_db = "NTKM"
+login = "work_user"
+password = "qwerty123"
+name_db = "work_db"

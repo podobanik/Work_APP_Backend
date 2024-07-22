@@ -59,7 +59,7 @@ class Staff(models.Model):
         verbose_name_plural = 'Сотрудники'
 
     staff_name = models.CharField(max_length=200, verbose_name='ФИО сотрудника')
-    sector_id = models.ForeignKey(Sector, null=True, on_delete=models.DO_NOTHING)
+    sector_id = models.ForeignKey(Sector, null=True, on_delete=models.DO_NOTHING, verbose_name='Сектор сотрудника')
 
 
 # Основной класс с задачами отдела
