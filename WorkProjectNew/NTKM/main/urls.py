@@ -1,9 +1,11 @@
 from django.urls import path, re_path
 from . import views
+from django.contrib import admin
+
 
 app_name = 'main'
 urlpatterns = [
-    path('', views.problems_list, name='index'),
-    re_path(r'^problems/(\d+)$', views.problems_detail),
-    re_path(r'^problems/$', views.problems_list),
+    path('admin/', admin.site.urls),
+    re_path(r'^$', views.problems_list),
+    re_path(r'^(\d+)$', views.problems_detail),
 ]
