@@ -1,9 +1,3 @@
-from django.template import loader
-from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.urls import reverse
-from django.views import generic
-from .models import Problem, Staff, Sector, ProblemStatus, ProblemType, ObjectOfWork
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -25,16 +19,18 @@ def problems_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['PUT', 'DELETE'])
 def problems_detail(request, pk):
     try:
         problem = Problem.objects.get(pk=pk)
     except Problem.DoesNotExist:
-       return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'PUT':
         serializer = ProblemSerializer(problem, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        elif request.method == 'DELETE':
-            problem.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        problem.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
