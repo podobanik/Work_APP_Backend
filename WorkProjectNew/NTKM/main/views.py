@@ -15,6 +15,7 @@ def problems_list(request):
         print('post')
         serializer = ProblemSerializer(data=request.data)
         if serializer.is_valid():
+            #serializer.validated_data
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -29,6 +30,7 @@ def problems_detail(request, pk):
     if request.method == 'PUT':
         serializer = ProblemSerializer(problem, data=request.data, context={'request': request})
         if serializer.is_valid():
+            #serializer.validated_data
             serializer.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

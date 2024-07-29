@@ -72,13 +72,13 @@ class Problem(models.Model):
         verbose_name_plural = 'Задачи'
 
     problem_text = models.TextField(max_length=1000, verbose_name='Введите название задачи')
-    staff = models.ForeignKey(Staff, blank=True, null=True, on_delete=models.DO_NOTHING,
+    staff_id = models.ForeignKey(Staff, blank=True, null=True, on_delete=models.DO_NOTHING,
                               verbose_name='Ответственный сотрудник')
-    problem_status = models.ForeignKey(ProblemStatus, blank=True, null=True, on_delete=models.PROTECT,
+    problem_status_id = models.ForeignKey(ProblemStatus, blank=True, null=True, on_delete=models.PROTECT,
                                        verbose_name='Выберите статус задачи')
-    object_of_work = models.ForeignKey(ObjectOfWork, blank=True, null=True, on_delete=models.DO_NOTHING,
+    object_of_work_id = models.ForeignKey(ObjectOfWork, blank=True, null=True, on_delete=models.DO_NOTHING,
                                        verbose_name='Объект АСУТП')
-    problem_type = models.ForeignKey(ProblemType, blank=True, null=True, on_delete=models.PROTECT,
+    problem_type_id = models.ForeignKey(ProblemType, blank=True, null=True, on_delete=models.PROTECT,
                                      verbose_name='Выберите тип мероприятия')
     control_date = models.DateField(default=0, verbose_name='Контрольный срок')
     add_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления задачи')
