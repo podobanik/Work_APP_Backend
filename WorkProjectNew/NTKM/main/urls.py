@@ -1,11 +1,12 @@
-from django.urls import path, re_path
-from . import views
-from django.contrib import admin
+from django.urls import path, include
+from .views import *
+from rest_framework import routers
 
+router = routers.DefaultRouter()
+router.register(r'problems', ProblemViewSet, basename='problems')
+print(router.urls)
 
 app_name = 'main'
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(r'^$', views.problems_list),
-    re_path(r'^(\d+)$', views.problems_detail),
+    path('', include(router.urls)),
 ]
