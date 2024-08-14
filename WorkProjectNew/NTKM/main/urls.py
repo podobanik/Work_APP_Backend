@@ -4,7 +4,8 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'problems', ProblemViewSet, basename='problems')
-print(router.urls)
+router.register(r'staff', StaffViewSet, basename='staff')
+
 
 app_name = 'main'
 urlpatterns = [

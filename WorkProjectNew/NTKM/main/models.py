@@ -62,6 +62,7 @@ class Staff(models.Model):
 
     staff_name = models.CharField(max_length=200, verbose_name='ФИО сотрудника')
     sector_id = models.ForeignKey(Sector, null=True, on_delete=models.DO_NOTHING, verbose_name='Сектор сотрудника')
+    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
 
 
 # Основной класс с задачами отдела
@@ -83,9 +84,9 @@ class Problem(models.Model):
     problem_type = models.ForeignKey(ProblemType, blank=True, null=True, on_delete=models.PROTECT,
                                      verbose_name='Выберите тип мероприятия')
     control_date = models.DateField(default=0, verbose_name='Контрольный срок')
-    add_date = models.DateTimeField(auto_created=True, verbose_name='Дата добавления задачи')
-    end_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата завершения задачи')
-    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.PROTECT)
+    add_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления задачи')
+    #end_date = models.DateTimeField(default=0, verbose_name='Дата завершения задачи')
+    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
 
 
 
