@@ -12,8 +12,8 @@ from .models import Problem, Staff
 
 class ProblemViewSet(viewsets.ModelViewSet):
     serializer_class = ProblemSerializer
-    permission_classes = (IsAdminOrIsOwner, )
-    authentication_classes = (SessionAuthentication, )
+    #permission_classes = (IsAdminOrIsOwner, )
+    #authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
@@ -31,8 +31,8 @@ class ProblemViewSet(viewsets.ModelViewSet):
 
 class StaffViewSet(viewsets.ModelViewSet):
     serializer_class = StaffSerializer
-    permission_classes = (IsAdminOrIsOwner, )
-    authentication_classes = (SessionAuthentication, )
+    #permission_classes = (IsAdminOrIsOwner, )
+    #authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
