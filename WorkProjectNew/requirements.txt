@@ -56,3 +56,5 @@ watchfiles==0.22.0
 websockets==12.0
 zope.event==5.0
 zope.interface==6.4.post2
+
+djangorestframework-simplejwt~=5.3.1
