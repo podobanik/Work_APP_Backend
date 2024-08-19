@@ -1,6 +1,7 @@
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
-from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 from .permissions import IsAdminOrIsOwner
 from .serializers import *
@@ -13,7 +14,7 @@ from .models import Problem, Staff
 class ProblemViewSet(viewsets.ModelViewSet):
     serializer_class = ProblemSerializer
     permission_classes = (IsAdminOrIsOwner, )
-    authentication_classes = (JWTAuthentication, )
+    authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
@@ -32,7 +33,7 @@ class ProblemViewSet(viewsets.ModelViewSet):
 class StaffViewSet(viewsets.ModelViewSet):
     serializer_class = StaffSerializer
     permission_classes = (IsAdminOrIsOwner, )
-    authentication_classes = (JWTAuthentication, )
+    authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
