@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
 
 
@@ -52,17 +53,63 @@ class ObjectOfWork(models.Model):
 
 
 # Таблица с сотрудниками отдела
-class Staff(models.Model):
+# class Staff(models.Model):
+#     def __str__(self):
+#         return self.staff_name
+#
+#     class Meta:
+#         verbose_name = 'Сотрудник'
+#         verbose_name_plural = 'Сотрудники'
+#
+#     staff_name = models.CharField(max_length=200, verbose_name='ФИО сотрудника')
+#     sector_id = models.ForeignKey(Sector, null=True, on_delete=models.DO_NOTHING, verbose_name='Сектор сотрудника')
+#     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
+
+
+class AppUserManager(BaseUserManager):
+    def create_user(self, email, password=None):
+        if not email:
+            raise ValueError('Необходимо ввести адрес электронной почты.')
+        if not password:
+            raise ValueError('Необходимо ввести пароль.')
+        email = self.normalize_email(email)
+        user = self.model(email=email)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, email, password=None):
+        if not email:
+            raise ValueError('Необходимо ввести адрес электронной почты.')
+        if not password:
+            raise ValueError('Необходимо ввести пароль.')
+        user = self.create_user(email, password)
+        user.is_superuser = True
+        user.save()
+        return user
+
+
+class AppUser(AbstractUser, PermissionsMixin):
     def __str__(self):
-        return self.staff_name
+        return str(self.name) + ' ' + str(self.surname) + ' ' + str(self.second_name)
 
     class Meta:
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
 
-    staff_name = models.CharField(max_length=200, verbose_name='ФИО сотрудника')
+    user_id = models.AutoField(primary_key=True)
+    email = models.EmailField(max_length=50, unique=True, verbose_name='Адрес электронной почты')
+    name = models.CharField(max_length=50, verbose_name='Имя')
+    surname = models.CharField(max_length=50, verbose_name='Фамилия')
+    second_name = models.CharField(max_length=50, verbose_name='Отчество')
     sector_id = models.ForeignKey(Sector, null=True, on_delete=models.DO_NOTHING, verbose_name='Сектор сотрудника')
-    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
+    title = models.CharField(max_length=50, verbose_name='Должность')
+    birthday = models.DateField(default=0, verbose_name='День рождения')
+    phone = models.IntegerField(verbose_name='Номер телефона')
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name', 'surname', 'second_name', 'title', 'birthday']
+    objects = AppUserManager()
 
 
 # Основной класс с задачами отдела
@@ -75,8 +122,8 @@ class Problem(models.Model):
         verbose_name_plural = 'Задачи'
 
     problem_text = models.TextField(max_length=1000, verbose_name='Введите название задачи')
-    staff = models.ForeignKey(Staff, blank=True, null=True, on_delete=models.PROTECT,
-                              verbose_name='Ответственный сотрудник')
+    #staff = models.ForeignKey(Staff, blank=True, null=True, on_delete=models.PROTECT,
+                             # verbose_name='Ответственный сотрудник')
     problem_status = models.ForeignKey(ProblemStatus, blank=True, null=True, on_delete=models.PROTECT,
                                        verbose_name='Выберите статус задачи')
     object_of_work = models.ForeignKey(ObjectOfWork, blank=True, null=True, on_delete=models.PROTECT,
@@ -86,7 +133,7 @@ class Problem(models.Model):
     control_date = models.DateField(default=0, verbose_name='Контрольный срок')
     add_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления задачи')
     #end_date = models.DateTimeField(default=0, verbose_name='Дата завершения задачи')
-    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.ForeignKey(AppUser, verbose_name="Сотрудник", on_delete=models.CASCADE)
 
 
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Problem, Staff
+from .models import Problem, AppUser
 
 
 class ProblemSerializer(serializers.ModelSerializer):
@@ -12,9 +12,8 @@ class ProblemSerializer(serializers.ModelSerializer):
         read_only_field = 'add_date'
 
 
-class StaffSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+class AppUserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Staff
+        model = AppUser
         fields = "__all__"

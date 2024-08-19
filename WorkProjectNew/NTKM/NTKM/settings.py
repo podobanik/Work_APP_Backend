@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
-from datetime import timedelta
 from pathlib import Path
+
+from django.conf.global_settings import AUTH_USER_MODEL
+
 from .DB_auth import login, password, name_db
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -121,6 +123,10 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+
+
+AUTH_USER_MODEL = 'main.AppUser'
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

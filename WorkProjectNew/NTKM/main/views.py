@@ -8,7 +8,7 @@ from .serializers import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, action
 from rest_framework import status, generics, viewsets
-from .models import Problem, Staff
+from .models import Problem, AppUser
 
 
 class ProblemViewSet(viewsets.ModelViewSet):
@@ -30,8 +30,8 @@ class ProblemViewSet(viewsets.ModelViewSet):
     #     return Response({'staff': staff.staff_name, 'sector_id': staff.sector_id})
 
 
-class StaffViewSet(viewsets.ModelViewSet):
-    serializer_class = StaffSerializer
+class AppUserViewSet(viewsets.ModelViewSet):
+    serializer_class = AppUserSerializer
     permission_classes = (IsAdminOrIsOwner, )
     authentication_classes = (SessionAuthentication, )
 
@@ -39,6 +39,6 @@ class StaffViewSet(viewsets.ModelViewSet):
         pk = self.kwargs.get("pk")
 
         if not pk: 
-            return Staff.objects.all()
+            return AppUser.objects.all()
 
-        return Staff.objects.filter(pk=pk)
+        return AppUser.objects.filter(pk=pk)
