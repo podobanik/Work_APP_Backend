@@ -18,10 +18,9 @@ Including another URLconf
 from django.urls import path, include, re_path
 
 from django.contrib import admin
-from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView, TokenVerifyView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('rest_framework.urls')),
     path('', include('main.urls')),
 ]

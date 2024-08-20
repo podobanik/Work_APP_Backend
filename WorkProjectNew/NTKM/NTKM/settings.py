@@ -97,7 +97,7 @@ REST_FRAMEWORK = {
     ],
 
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -125,7 +125,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 
-AUTH_USER_MODEL = 'main.AppUser'
+AUTH_USER_MODEL = 'main.User'
 
 
 AUTH_PASSWORD_VALIDATORS = [

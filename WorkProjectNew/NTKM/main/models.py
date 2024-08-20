@@ -1,7 +1,7 @@
+from datetime import date
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
-
 
 
 # ТПР, ТСБ, СБИБ
@@ -66,7 +66,7 @@ class ObjectOfWork(models.Model):
 #     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
 
 
-class AppUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
             raise ValueError('Необходимо ввести адрес электронной почты.')
@@ -89,27 +89,29 @@ class AppUserManager(BaseUserManager):
         return user
 
 
-class AppUser(AbstractUser, PermissionsMixin):
+class User(AbstractUser, PermissionsMixin):
     def __str__(self):
-        return str(self.name) + ' ' + str(self.surname) + ' ' + str(self.second_name)
+        description = str(self.last_name) + ' ' + str(self.first_name) + ' ' + str(self.second_name)
+        return description
 
     class Meta:
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
 
     user_id = models.AutoField(primary_key=True)
-    email = models.EmailField(max_length=50, unique=True, verbose_name='Адрес электронной почты')
-    name = models.CharField(max_length=50, verbose_name='Имя')
-    surname = models.CharField(max_length=50, verbose_name='Фамилия')
-    second_name = models.CharField(max_length=50, verbose_name='Отчество')
+    email = models.EmailField(max_length=150, unique=True, verbose_name='Адрес электронной почты')
+    username = models.CharField(max_length=150, verbose_name='Логин')
+    first_name = models.CharField(max_length=150, verbose_name='Имя')
+    last_name = models.CharField(max_length=150, verbose_name='Фамилия')
+    second_name = models.CharField(max_length=150, verbose_name='Отчество')
     sector_id = models.ForeignKey(Sector, null=True, on_delete=models.DO_NOTHING, verbose_name='Сектор сотрудника')
-    title = models.CharField(max_length=50, verbose_name='Должность')
-    birthday = models.DateField(default=0, verbose_name='День рождения')
-    phone = models.IntegerField(verbose_name='Номер телефона')
+    title = models.CharField(max_length=150, verbose_name='Должность')
+    birthday = models.DateField(default=date.today(), verbose_name='День рождения')
+    phone = models.IntegerField(verbose_name='Номер телефона', blank=True, null=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'surname', 'second_name', 'title', 'birthday']
-    objects = AppUserManager()
+    REQUIRED_FIELDS = ['second_name', 'title', 'first_name', 'last_name']
+    objects = UserManager()
 
 
 # Основной класс с задачами отдела
@@ -122,8 +124,6 @@ class Problem(models.Model):
         verbose_name_plural = 'Задачи'
 
     problem_text = models.TextField(max_length=1000, verbose_name='Введите название задачи')
-    #staff = models.ForeignKey(Staff, blank=True, null=True, on_delete=models.PROTECT,
-                             # verbose_name='Ответственный сотрудник')
     problem_status = models.ForeignKey(ProblemStatus, blank=True, null=True, on_delete=models.PROTECT,
                                        verbose_name='Выберите статус задачи')
     object_of_work = models.ForeignKey(ObjectOfWork, blank=True, null=True, on_delete=models.PROTECT,
@@ -132,8 +132,8 @@ class Problem(models.Model):
                                      verbose_name='Выберите тип мероприятия')
     control_date = models.DateField(default=0, verbose_name='Контрольный срок')
     add_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления задачи')
-    #end_date = models.DateTimeField(default=0, verbose_name='Дата завершения задачи')
-    user = models.ForeignKey(AppUser, verbose_name="Сотрудник", on_delete=models.CASCADE)
+    #end_date = models.DateTimeField(auto_now=True, verbose_name='Дата завершения задачи')
+    user = models.ForeignKey(User, verbose_name="Сотрудник", on_delete=models.CASCADE)
 
 
 
