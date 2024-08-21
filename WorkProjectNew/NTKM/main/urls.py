@@ -9,9 +9,9 @@ router.register(r'users', UserViewSet, basename='users')
 
 app_name = 'main'
 urlpatterns = [
-    path('register', UserRegister.as_view(), name='Регистрация'),
-    path('login', UserLogin.as_view(), name='Вход'),
-    path('logout', UserLogout.as_view(), name='Выход'),
-    path('user', UserCheckView.as_view(), name='Текущий пользователь'),
+    path('register/', UserRegister.as_view(), name='Регистрация'),
+    path('login/', UserLogin.as_view(), name='Вход'),
+    path('logout/', UserLogout.as_view(), name='Выход'),
+    path('user/', UserCheckView.as_view(), name='Текущий пользователь'),
     path('', include(router.urls)),
 ]
