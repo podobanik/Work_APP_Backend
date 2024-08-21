@@ -104,7 +104,7 @@ class User(AbstractUser, PermissionsMixin):
     first_name = models.CharField(max_length=150, verbose_name='Имя')
     last_name = models.CharField(max_length=150, verbose_name='Фамилия')
     second_name = models.CharField(max_length=150, verbose_name='Отчество')
-    sector_id = models.ForeignKey(Sector, null=True, on_delete=models.DO_NOTHING, verbose_name='Сектор сотрудника')
+    sector = models.ForeignKey(Sector, null=True, on_delete=models.DO_NOTHING, verbose_name='Сектор сотрудника')
     title = models.CharField(max_length=150, verbose_name='Должность')
     birthday = models.DateField(default=date.today(), verbose_name='День рождения')
     phone = models.IntegerField(verbose_name='Номер телефона', blank=True, null=True)
