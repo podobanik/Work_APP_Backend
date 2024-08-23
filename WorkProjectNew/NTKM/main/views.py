@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from rest_framework.authentication import SessionAuthentication
 from django.contrib.auth import get_user_model, login, logout
 from rest_framework.views import APIView
@@ -60,9 +61,12 @@ class UserLogin(APIView):
 
 
 class UserLogout(APIView):
+    permission_classes = (permissions.AllowAny, )
+    authentication_classes = (SessionAuthentication,)
+
     def post(self, request):
         logout(request)
-        return Response(status=status.HTTP_200_OK)
+        return HttpResponseRedirect('', status=status.HTTP_200_OK)
 
 
 class UserViewSet(viewsets.ModelViewSet):
