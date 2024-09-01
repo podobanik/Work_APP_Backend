@@ -15,7 +15,7 @@ from .validations import custom_validation, validate_email, validate_password
 
 class ProblemViewSet(viewsets.ModelViewSet):
     serializer_class = ProblemSerializer
-    permission_classes = (IsAdminOrIsOwner, )
+    #permission_classes = (permissions.AllowAny, )
     authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
@@ -33,7 +33,7 @@ class ProblemViewSet(viewsets.ModelViewSet):
 
 
 class UserRegister(APIView):
-    permission_classes = (permissions.AllowAny, )
+    #permission_classes = (permissions.AllowAny, )
 
     def post(self, request):
         validated_data = custom_validation(request.data)
@@ -46,8 +46,8 @@ class UserRegister(APIView):
 
 
 class UserLogin(APIView):
-    permission_classes = (permissions.AllowAny, )
-    authentication_classes = (SessionAuthentication, )
+    #permission_classes = (permissions.AllowAny, )
+    #authentication_classes = (SessionAuthentication, )
 
     def post(self, request):
         data = request.data
@@ -61,17 +61,16 @@ class UserLogin(APIView):
 
 
 class UserLogout(APIView):
-    permission_classes = (permissions.AllowAny, )
-    authentication_classes = (SessionAuthentication,)
-
+    #permission_classes = (permissions.IsAuthenticated, )
+    authentication_classes = (SessionAuthentication, )
     def post(self, request):
         logout(request)
-        return HttpResponseRedirect('', status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
 
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    permission_classes = (IsAdminOrIsOwner, )
+    #permission_classes = (IsAdminOrIsOwner, )
     authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
@@ -84,7 +83,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class UserCheckView(APIView):
-    permission_classes = (permissions.IsAuthenticated, )
+    #permission_classes = (permissions.AllowAny, )
     authentication_classes = (SessionAuthentication, )
 
     def get(self, request):
