@@ -52,20 +52,6 @@ class ObjectOfWork(models.Model):
     object_of_work_text = models.CharField(max_length=200, verbose_name='Объект производства работ')
 
 
-# Таблица с сотрудниками отдела
-# class Staff(models.Model):
-#     def __str__(self):
-#         return self.staff_name
-#
-#     class Meta:
-#         verbose_name = 'Сотрудник'
-#         verbose_name_plural = 'Сотрудники'
-#
-#     staff_name = models.CharField(max_length=200, verbose_name='ФИО сотрудника')
-#     sector_id = models.ForeignKey(Sector, null=True, on_delete=models.DO_NOTHING, verbose_name='Сектор сотрудника')
-#     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
-
-
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
@@ -132,7 +118,7 @@ class Problem(models.Model):
                                      verbose_name='Выберите тип мероприятия')
     control_date = models.DateField(default=0, verbose_name='Контрольный срок')
     add_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления задачи')
-    #end_date = models.DateTimeField(auto_now=True, verbose_name='Дата завершения задачи')
+    change_date = models.DateTimeField(auto_now=True, verbose_name='Дата изменения задачи')
     user = models.ForeignKey(User, verbose_name="Сотрудник", on_delete=models.CASCADE)
 
 

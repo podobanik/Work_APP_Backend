@@ -2,14 +2,14 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
-from .models import Problem, User
+from .models import Problem, User, Sector, ProblemType, ProblemStatus, ObjectOfWork
 
 
 class ProblemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Problem
         fields = "__all__"
-        read_only_field = 'add_date'
+        read_only_fields = ('add_date', 'change_date', )
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -46,3 +46,27 @@ class UserCheckSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('email', 'username')
+
+
+class SectorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sector
+        fields = '__all__'
+
+
+class ProblemStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProblemStatus
+        fields = '__all__'
+
+
+class ProblemTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProblemType
+        fields = '__all__'
+
+
+class ObjectOfWorkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ObjectOfWork
+        fields = '__all__'

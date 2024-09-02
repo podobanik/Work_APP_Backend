@@ -9,27 +9,8 @@ from .serializers import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, action
 from rest_framework import status, generics, viewsets, permissions
-from .models import Problem, User
+from .models import Problem, User, Sector, ProblemType, ProblemStatus, ObjectOfWork
 from .validations import custom_validation, validate_email, validate_password
-
-
-class ProblemViewSet(viewsets.ModelViewSet):
-    serializer_class = ProblemSerializer
-    #permission_classes = (permissions.AllowAny, )
-    authentication_classes = (SessionAuthentication, )
-
-    def get_queryset(self):
-        pk = self.kwargs.get("pk")
-
-        if not pk:
-            return Problem.objects.all()
-
-        return Problem.objects.filter(pk=pk)
-
-    # @action(methods=['get'], detail=True)
-    # def person(self, request, pk=None):
-    #     staff = Staff.objects.get(pk=pk)
-    #     return Response({'staff': staff.staff_name, 'sector_id': staff.sector_id})
 
 
 class UserRegister(APIView):
@@ -89,3 +70,73 @@ class UserCheckView(APIView):
     def get(self, request):
         serializer = UserCheckSerializer(request.user)
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+
+
+class ProblemViewSet(viewsets.ModelViewSet):
+    serializer_class = ProblemSerializer
+    #permission_classes = (permissions.AllowAny, )
+    authentication_classes = (SessionAuthentication, )
+
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+
+        if not pk:
+            return Problem.objects.all()
+
+        return Problem.objects.filter(pk=pk)
+
+
+class SectorViewSet(viewsets.ModelViewSet):
+    serializer_class = SectorSerializer
+    #permission_classes = (permissions.AllowAny, )
+    authentication_classes = (SessionAuthentication, )
+
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+
+        if not pk:
+            return Sector.objects.all()
+
+        return Sector.objects.filter(pk=pk)
+
+
+class ProblemStatusViewSet(viewsets.ModelViewSet):
+    serializer_class = ProblemStatusSerializer
+    #permission_classes = (permissions.AllowAny, )
+    authentication_classes = (SessionAuthentication, )
+
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+
+        if not pk:
+            return ProblemStatus.objects.all()
+
+        return ProblemStatus.objects.filter(pk=pk)
+
+
+class ProblemTypeViewSet(viewsets.ModelViewSet):
+    serializer_class = ProblemTypeSerializer
+    #permission_classes = (permissions.AllowAny, )
+    authentication_classes = (SessionAuthentication, )
+
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+
+        if not pk:
+            return ProblemType.objects.all()
+
+        return ProblemType.objects.filter(pk=pk)
+
+
+class ObjectOfWorkViewSet(viewsets.ModelViewSet):
+    serializer_class = ObjectOfWorkSerializer
+    #permission_classes = (permissions.AllowAny, )
+    authentication_classes = (SessionAuthentication, )
+
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+
+        if not pk:
+            return ObjectOfWork.objects.all()
+
+        return ObjectOfWork.objects.filter(pk=pk)
