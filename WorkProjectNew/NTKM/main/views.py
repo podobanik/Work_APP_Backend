@@ -28,7 +28,7 @@ class UserRegister(APIView):
 
 class UserLogin(APIView):
     #permission_classes = (permissions.AllowAny, )
-    #authentication_classes = (SessionAuthentication, )
+    authentication_classes = (SessionAuthentication, )
 
     def post(self, request):
         data = request.data
@@ -52,7 +52,7 @@ class UserLogout(APIView):
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     #permission_classes = (IsAdminOrIsOwner, )
-    authentication_classes = (SessionAuthentication, )
+    #authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
@@ -75,7 +75,7 @@ class UserCheckView(APIView):
 class ProblemViewSet(viewsets.ModelViewSet):
     serializer_class = ProblemSerializer
     #permission_classes = (permissions.AllowAny, )
-    authentication_classes = (SessionAuthentication, )
+    #authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
@@ -89,7 +89,7 @@ class ProblemViewSet(viewsets.ModelViewSet):
 class SectorViewSet(viewsets.ModelViewSet):
     serializer_class = SectorSerializer
     #permission_classes = (permissions.AllowAny, )
-    authentication_classes = (SessionAuthentication, )
+    #authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
@@ -103,7 +103,7 @@ class SectorViewSet(viewsets.ModelViewSet):
 class ProblemStatusViewSet(viewsets.ModelViewSet):
     serializer_class = ProblemStatusSerializer
     #permission_classes = (permissions.AllowAny, )
-    authentication_classes = (SessionAuthentication, )
+    #authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
@@ -117,7 +117,7 @@ class ProblemStatusViewSet(viewsets.ModelViewSet):
 class ProblemTypeViewSet(viewsets.ModelViewSet):
     serializer_class = ProblemTypeSerializer
     #permission_classes = (permissions.AllowAny, )
-    authentication_classes = (SessionAuthentication, )
+    #authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
@@ -131,7 +131,7 @@ class ProblemTypeViewSet(viewsets.ModelViewSet):
 class ObjectOfWorkViewSet(viewsets.ModelViewSet):
     serializer_class = ObjectOfWorkSerializer
     #permission_classes = (permissions.AllowAny, )
-    authentication_classes = (SessionAuthentication, )
+    #authentication_classes = (SessionAuthentication, )
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
